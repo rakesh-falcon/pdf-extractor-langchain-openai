@@ -28,6 +28,6 @@ class MVRData(BaseModel):
     lic_class: Optional[str] = None
     violations: List[Violation]
 
-# ✅ Updated for Pydantic v2
+# or Pydantic v2
 class MVRDriverList(RootModel[List[MVRData]]):
     pass

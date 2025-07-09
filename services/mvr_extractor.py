@@ -21,7 +21,7 @@ def extract_json(text: str) -> list | dict:
         if match:
             json_str = match.group()
 
-            # ✅ Optional: Fix common formatting issues
+            # Optional: Fix common formatting issues
             json_str = json_str.replace('}\n{', '},\n{')  # missing comma between objects
             return json.loads(json_str)
 
