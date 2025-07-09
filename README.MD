@@ -51,8 +51,8 @@ Supports multi-file uploads, schema validation, OCR, and LLM-based parsing.
 ### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/your-username/pdf-extractor-langchain.git
-cd pdf-extractor-langchain
+git clone https://github.com/rakesh-falcon/pdf-extractor-langchain-openai.git
+cd pdf-extractor-langchain-openai
 ```
 
 ### 2. Create Virtual Environment
@@ -125,6 +125,6 @@ This project is licensed under the MIT License.
 
 ## Support
 
-For issues, bugs, or feature requests, please open an issue on the [GitHub repo](https://github.com/rakesh-falcon/langchain-openai-doc-chatbot).
+For issues, bugs, or feature requests, please open an issue on the [GitHub repo](https://github.com/rakesh-falcon/pdf-extractor-langchain-openai.git).
 
 
