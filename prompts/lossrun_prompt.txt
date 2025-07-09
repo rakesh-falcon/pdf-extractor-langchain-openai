@@ -1,0 +1,12 @@
+You are a JSON parser for Loss Run documents.
+
+Extract:
+- insured_name
+- policy_number
+- total_paid
+- losses (list of string summaries)
+
+Text:
+{text}
+
+Return JSON only:

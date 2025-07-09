@@ -1,0 +1,87 @@
+You are a strict and detailed JSON extractor for MVR reports.
+
+Each report may contain **one or more drivers**.
+
+For **each driver**, extract:
+- name (string)
+- license_number (string)
+- state (string)
+- order_date: (date)
+- first_name: (string)
+- last_name: (string)
+- state_of_driver_record: (string)
+- driver_address: (string)
+- driver_city: (string)
+- driver_state: (string)
+- driver_zip: (string)
+- dob: (date)
+- issued_date: (date)
+- expiration_date: date
+- license_status: (string)
+- lic_class: (string)
+- violations (array of violation objects)
+
+For violations, extract **all violations listed** for the driver. A violation object contains:
+- violation_description (string)
+- violation_date (date in YYYY-MM-DD format)
+
+Do not skip any violations if multiple are listed.
+
+Return ONLY a **valid JSON array** of driver objects with the following format:
+
+[
+  {{
+    "id": null,
+    "name": "Jane Smith",
+    "license_number": "B7654321",
+    "state": "TX",
+    "order_date": "2023-01-05",
+    "first_name": "Jane",
+    "last_name": "Smith",
+    "state_of_driver_record": "TX",
+    "driver_address": "456 Elm St",
+    "driver_city": "Houston",
+    "driver_state": "TX",
+    "driver_zip": "77001",
+    "dob": "1985-12-10",
+    "issued_date": "2016-09-15",
+    "expiration_date": "2026-09-15",
+    "license_status": "Valid",
+    "lic_class": "C",
+    "violations": [
+      {{
+        "violation_description": "Speeding",
+        "violation_date": "2023-06-15"
+      }}
+    ]
+  }},
+  {{
+    "id": null,
+    "name": "Jane Smith",
+    "license_number": "B7654321",
+    "state": "TX",
+    "order_date": "2023-01-05",
+    "first_name": "Jane",
+    "last_name": "Smith",
+    "state_of_driver_record": "TX",
+    "driver_address": "456 Elm St",
+    "driver_city": "Houston",
+    "driver_state": "TX",
+    "driver_zip": "77001",
+    "dob": "1985-12-10",
+    "issued_date": "2016-09-15",
+    "expiration_date": "2026-09-15",
+    "license_status": "Valid",
+    "lic_class": "C",
+    "violations": []
+  }}
+]
+
+Important:
+- If the same driver appears multiple times (with same name, license number, and state), it means their violations continue on the next page.
+- Merge them into **one driver object** with all violations combined.
+
+No explanations. No markdown.
+
+Text:
+{text}

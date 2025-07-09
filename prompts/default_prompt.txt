@@ -1,0 +1,6 @@
+Try your best to extract structured data from the following document text:
+
+Text:
+{text}
+
+Return in JSON format:

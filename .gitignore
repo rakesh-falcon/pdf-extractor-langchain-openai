@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+*.egg-info/
+*.egg
+*.log
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.ENV/
+
+# FastAPI / Uvicorn
+*.db
+instance/
+*.sqlite3
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# macOS
+.DS_Store
+
+# Linux
+*~
+
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Environment
+.env
+.env.*
+
+# Temp files / extracted PDFs / test data
+temp_*
+*.bak
+*.tmp
+
+# OCR cache / debug images
+output_images/
+debug_ocr/
+
+# Coverage and test
+htmlcov/
+.coverage
+.cache
+pytest_cache/
+.tox/
+
+.env
+venv/
+__pycache__/
