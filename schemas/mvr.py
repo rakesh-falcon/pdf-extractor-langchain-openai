@@ -4,8 +4,8 @@ from datetime import date
 from typing import Optional
 
 class Violation(BaseModel):
-    violation_description: str
-    violation_date: date
+    violation_description: Optional[str] = None
+    violation_date: Optional[date] = None
     id:Optional[str] = None
 
 class MVRData(BaseModel):

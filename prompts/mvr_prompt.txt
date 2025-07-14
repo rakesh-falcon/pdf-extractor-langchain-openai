@@ -69,11 +69,36 @@ Return ONLY a **valid JSON array** of driver objects with the following format:
     "driver_state": "TX",
     "driver_zip": "77001",
     "dob": "1985-12-10",
-    "issued_date": "2016-09-15",
+    "issued_date": null,
     "expiration_date": "2026-09-15",
     "license_status": "Valid",
     "lic_class": "C",
     "violations": []
+  }},
+  {{
+    "id": null,
+    "name": "Jane Smith",
+    "license_number": "B7654321",
+    "state": "TX",
+    "order_date": null,
+    "first_name": "Jane",
+    "last_name": "Smith",
+    "state_of_driver_record": "TX",
+    "driver_address": "456 Elm St",
+    "driver_city": "Houston",
+    "driver_state": "TX",
+    "driver_zip": "77001",
+    "dob": null,
+    "issued_date": null,
+    "expiration_date": null,
+    "license_status": "Valid",
+    "lic_class": "C",
+    "violations": [
+      {{
+        "violation_description": null,
+        "violation_date": null
+      }}
+    ]
   }}
 ]
 

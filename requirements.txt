@@ -10,3 +10,5 @@ pillow
 python-dotenv
 langchain-openai
 langchain_community
+opencv-python 
+numpy

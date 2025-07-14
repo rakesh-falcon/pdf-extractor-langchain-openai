@@ -6,7 +6,8 @@ from fastapi.encoders import jsonable_encoder
 from datetime import datetime
 from collections import Counter
 import json, os, re
-
+from datetime import datetime
+import fitz
 def load_prompt():
     with open("prompts/mvr_prompt.txt", "r") as f:
         return f.read()
@@ -37,7 +38,15 @@ def extract_json(text: str) -> list | dict:
         "raw_response": cleaned[:1000]
     }
 
-
+def get_page_count(file_path: str) -> int:
+    ext = os.path.splitext(file_path)[1].lower()
+    if ext == ".pdf":
+        return len(fitz.open(file_path))
+    elif ext in [".png", ".jpg", ".jpeg", ".bmp", ".tiff"]:
+        return 1
+    else:
+        return 0
+    
 async def extract_mvr(files):
     results = []
     prompt_template = ChatPromptTemplate.from_template(load_prompt())
@@ -50,6 +59,7 @@ async def extract_mvr(files):
             f.write(content)
 
         text = extract_text_with_ocr(path)
+        page_count = get_page_count(path)
         os.remove(path)
 
         # LLM inference
@@ -71,52 +81,53 @@ async def extract_mvr(files):
 
         results.append({
             "file_name": file.filename,
-            "data": structured
+            "data": structured,
+            "page_count": page_count
         })
 
     # response_content = add_metadata_per_file({"results": results})
     # return jsonable_encoder(response_content)
-    return results
+    # return response_content
+    response_content = add_metadata_per_file({"results": results})
+    return jsonable_encoder(response_content)
 
-
-def add_metadata_per_file(response: dict) -> dict:
-    for file_info in response.get("results", []):
-        data = file_info.get("data", [])
-        file_info["metadata"] = {
-            "total_drivers": len(data),
-            "extraction_date": datetime.today().strftime("%Y-%m-%d")
-        }
-    return response
 
 # def add_metadata_per_file(response: dict) -> dict:
 #     for file_info in response.get("results", []):
 #         data = file_info.get("data", [])
-
-#         violations = []
-#         for d in data:
-#             v_list = d.get("violations", [])
-#             if isinstance(v_list, list):
-#                 for v in v_list:
-#                     if isinstance(v, dict) and v.get("violation_description"):
-#                         violations.append(v["violation_description"])
-
-#         license_statuses = [d.get("license_status") for d in data if d.get("license_status")]
-#         license_classes = sorted(set(d.get("lic_class") for d in data if d.get("lic_class")))
-#         states = sorted(set(d.get("state_of_driver_record") for d in data if d.get("state_of_driver_record")))
-
 #         file_info["metadata"] = {
-#             "file_name": file_info.get("file_name"),
-#             "extraction_date": datetime.today().strftime("%Y-%m-%d"),
 #             "total_drivers": len(data),
-#             "drivers_with_violations": sum(
-#                 1 for d in data
-#                 if isinstance(d.get("violations", []), list) and d.get("violations")
-#             ),
-#             "total_violations": len(violations),
-#             "license_status_summary": dict(Counter(license_statuses)),
-#             "license_classes": license_classes,
-#             "states_involved": states,
-#             "violations_summary": dict(Counter(violations))
+#             "extraction_date": datetime.today().strftime("%Y-%m-%d")
 #         }
-
 #     return response
+
+
+
+def add_metadata_per_file(response: dict) -> dict:
+    total_drivers = 0
+    total_files = 0
+    total_pages = 0
+    for file_info in response.get("results", []):
+        data = file_info.get("data", [])
+        driver_count = len(data) if isinstance(data, list) else 0
+        pages = file_info.get("page_count", 0)
+        
+        file_info["metadata"] = {
+            "total_drivers": driver_count,
+            "total_pages": pages,
+            "extraction_date": datetime.today().strftime("%Y-%m-%d")
+        }
+        file_info.pop("page_count", None)
+        total_drivers += driver_count
+        total_files += 1
+        total_pages += pages
+
+    response["global_metadata"] = {
+        "total_files_processed": total_files,
+        "total_drivers_extracted": total_drivers,
+        "total_pages": total_pages,
+        "extraction_date": datetime.today().strftime("%Y-%m-%d"),
+        "timestamp": datetime.utcnow().isoformat() + "Z"
+    }
+
+    return response
