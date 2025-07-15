@@ -89,6 +89,7 @@ Returns structured driver info and violations
 Accepts multiple .pdf files
 
 Returns structured driver info and violations with conf score.
+
 ---
 
 ## Adding New Document Type
