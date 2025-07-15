@@ -78,12 +78,17 @@ cd pdf-extractor-langchain-openai
 
 ## API Endpoints
 
-`POST --> /api/mvr/`
+`POST --> /api/mvr`
 
 Accepts multiple .pdf files
 
 Returns structured driver info and violations
 
+`POST --> /api/mvr-conf`
+
+Accepts multiple .pdf files
+
+Returns structured driver info and violations with conf score.
 ---
 
 ## Adding New Document Type
