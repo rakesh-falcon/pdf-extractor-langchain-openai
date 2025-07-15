@@ -28,3 +28,12 @@ def extract_text_with_ocr(file_path: str) -> str:
         return ""
 
     return full_text.strip()
+
+
+
+
+
+
+
+
+
